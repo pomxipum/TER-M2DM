@@ -1,0 +1,71 @@
+This instruction is for Ubuntu
+ref:
+    http://coen.boisestate.edu/ece/files/2013/05/Creating.a.Raspberry.Pi-Based.Beowulf.Cluster_v2.pdf
+    http://makezine.com/projects/build-a-compact-4-node-raspberry-pi-cluster/
+    https://cran.r-project.org/bin/linux/debian/ 
+    https://www.raspberrypi.org/magpi/cluster-computer-raspberry-pi-3/   
+
+##################################################
+1.  Download Raspbian Jessie lite: https://www.raspberrypi.org/downloads/raspbian/
+    Download Etcher: https://etcher.io/
+    Using Etcher, burn image of Raspbian to a microSD card (noted sd0). 
+    Unmount sd0, put it into a Raspberry Pi. 
+
+2.  Connect the Raspberry Pi  to a monitor and a keyboard (before plug in the charger)
+    From Nov 2016, the ssh option of Raspbian is turned off by default (so stupid!!!) so we have to turn it on. 
+    After plugging in the charger, we can see the terminal of Raspbian on the monitor. 
+        username: pi
+        password: raspberry
+	
+3.  Configure the Raspberry Pi:
+    sudo raspi-config
+        - Expand Filesystem
+        - Change Timezone, Keyboard Layout, Location
+        - Change password to thumargot
+        - Advanced Options: Turn on SSH, Change Hostname to rpi0
+    Disconnect the RaspberryPi from the monitor and the keyboard
+    
+4.  Connect the Raspberry to the same network as your computer then
+        sudo apt install nmap
+        nmap -p22 192.168.1.0/24
+    to get the IP adresse of the RaspberryPi
+    
+5.  Connect to the Raspberry through ssh
+        ssh pi@IPadress
+    Now we will work on the Raspberry
+    
+6.  Update and upgrade
+        sudo apt update
+        sudo apt spgrade
+    
+7.  Install newest version of R
+        sudo nano /etc/apt/sources.list
+            deb http://mirrordirector.raspbian.org/raspbian/ jessie main contrib non-free rpi
+            # Uncomment line below then 'apt-get update' to enable 'apt-get source'
+            deb-src http://archive.raspbian.org/raspbian/ jessie main contrib non-free rpi
+            deb http://archive.raspbian.org/raspbian/ stretch main
+            
+        sudo apt update
+        sudo apt upgrade (really long)
+        sudo apt autoremove
+        sudo apt install r-base r-base-core r-base-dev
+        
+8.  Install MPICH
+        sudo apt install mpich
+    test
+        mpiexec -n 1 hostname
+        
+9.  Install NFS
+        sudo apt install nfs-common
+        
+10. Turn off the Raspberry, put sd0 to the card reader.
+    Create an image of Raspbian
+        sudo dd bs=4M if=/dev/sdd of=raspbian-cluster.img 
+        # replace sdd by the correct location of the SD card
+    Burn the created image to the other 5 microSD cards
+    
+11. On each RaspberryPi:
+        sudo raspi-config 
+            -> Change hostname to rpi1, rpi2, rpi3, rpi4, rpi5
+        
+        
