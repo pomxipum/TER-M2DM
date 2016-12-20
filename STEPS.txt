@@ -65,7 +65,38 @@ ref:
     Burn the created image to the other 5 microSD cards
     
 11. On each RaspberryPi:
-        sudo raspi-config 
-            -> Change hostname to rpi1, rpi2, rpi3, rpi4, rpi5
+        Change host name to rpi1, rpi2, rpi3, rpi4, rpi5
+            sudo raspi-config 
+        Add IP adresses of all the nodes to /etc/hosts on each nodes 
+            sudo nano /etc/hosts
+                192.168.1.40 rpi0 rpi0.local rpi0.lan
+                192.168.1.41 rpi1 rpi1.local rpi1.lan
+                192.168.1.42 rpi2 rpi2.local rpi2.lan
+        Create a rsa key on each node and add the key to the other nodes
+            ssh-keygen -t rsa
+            ssh-copy-id pi@192.168.1.[ ] 
+                
+12. Create a share folder for all nodes. On rpi0:
+        - Install nfs server
+            sudo apt install nfs-kernel-server
+        - Create a cloud folder 
+            mkdir cloud
+        - Export this folder
+            sudo nano /etc/exports
+                add to the end: /home/pi/cloud *(rw,sync,no_root_squash,no_subtree_check)
+        - Modify access to the folder
+            sudo chmod -R 777 /home/pi/cloud/  
+        - Apply changes to NFS server
+            sudo update-rc.d rpcbind enable
+            sudo service rpcbind restart
+            sudo exportfs -a
+            sudo service nfs-kernel-server restart
+    Automount. On each of other rpi:
+        - Copy mount_nfs_rpi0.py to /home/pi
+        - Set the python script to run at start up
+            sudo crontab -e
+                add to the end: @reboot python /home/pi/mount_nfs_rpi0.py 
+            
+    
         
         
