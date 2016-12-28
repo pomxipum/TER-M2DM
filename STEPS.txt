@@ -36,7 +36,7 @@ ref:
     
 6.  Update and upgrade
         sudo apt update
-        sudo apt spgrade
+        sudo apt upgrade
     
 7.  Install newest version of R
         sudo nano /etc/apt/sources.list
