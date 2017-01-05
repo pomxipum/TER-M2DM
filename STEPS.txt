@@ -69,9 +69,12 @@ ref:
             sudo raspi-config 
         Add IP adresses of all the nodes to /etc/hosts on each nodes 
             sudo nano /etc/hosts
-                192.168.1.40 rpi0 rpi0.local rpi0.lan
-                192.168.1.41 rpi1 rpi1.local rpi1.lan
-                192.168.1.42 rpi2 rpi2.local rpi2.lan
+                192.168.43.253 rpi0 rpi0.local rpi0.lan
+                192.168.43.254 rpi1 rpi1.local rpi1.lan
+                192.168.43.252 rpi2 rpi2.local rpi2.lan
+                192.168.43.4 rpi0 rpi0.local rpi3.lan
+                192.168.43.2 rpi1 rpi1.local rpi4.lan
+                192.168.43.3 rpi2 rpi2.local rpi5.lan
         Create a rsa key on each node and add the key to the other nodes
             ssh-keygen -t rsa
             ssh-copy-id pi@192.168.1.[ ] 
@@ -92,6 +95,8 @@ ref:
             sudo exportfs -a
             sudo service nfs-kernel-server restart
     Automount. On each of other rpi:
+        - Create a cloud folder
+            mkdir cloud
         - Copy mount_nfs_rpi0.py to /home/pi
         - Set the python script to run at start up
             sudo crontab -e
