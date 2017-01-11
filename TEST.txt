@@ -1,0 +1,16 @@
+#TEST makeCluster
+ncores = 6 
+> system.time(cl <- makeCluster(rep(hosts, each=ncores/6)))
+   user  system elapsed
+  0.040   0.100  13.299
+> system.time(cl <- makeCluster(rep(hosts, each=ncores/6), master ="192.168.43.253", methods = F))
+   user  system elapsed
+  0.010   0.130   7.754
+
+ncores = 24
+> system.time(cl <- makeCluster(rep(hosts, each=ncores/6)))
+   user  system elapsed
+  0.110   0.440  52.272
+> system.time(cl <- makeCluster(rep(hosts, each=ncores/6), master ="192.168.43.253", methods = F))
+   user  system elapsed
+  0.110   0.440  30.725
