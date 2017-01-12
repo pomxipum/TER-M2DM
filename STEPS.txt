@@ -7,9 +7,14 @@ ref:
 
 ##################################################
 1.  Download Raspbian Jessie lite: https://www.raspberrypi.org/downloads/raspbian/
-    Download Etcher: https://etcher.io/
-    Using Etcher, burn image of Raspbian to a microSD card (noted sd0). 
-    Unmount sd0, put it into a Raspberry Pi. 
+    For Linux :
+    -Download Etcher: https://etcher.io/
+    -Using Etcher, burn image of Raspbian to a microSD card (noted sd0). 
+    For Windows :
+    -Download Win32DiskImager: https://sourceforge.net/projects/win32diskimager/files/latest/download
+    -Using Win32DiskImager, burn image of Raspbian to a microSD card. 
+
+    Unmount sdcard (sd0), put it into a Raspberry Pi. 
 
 2.  Connect the Raspberry Pi  to a monitor and a keyboard (before plug in the charger)
     From Nov 2016, the ssh option of Raspbian is turned off by default (so stupid!!!) so we have to turn it on. 
@@ -78,8 +83,18 @@ ref:
         Create a rsa key on each node and add the key to the other nodes
             ssh-keygen -t rsa
             ssh-copy-id pi@rpi[]
+
+12. On each RaspberryPi:
+        sudo nano /etc/dhcpcd.conf
+            add to the end:
+
+            nohook lookup-hostname
+            interface eth0
+            static ip_address=192.168.43.253/24 # change 253 acording to rpi1,rpi2..etc 
+            static routers=192.168.43.1
+            static domain_name_servers=192.168.43.1
                 
-12. Create a share folder for all nodes. On rpi0:
+13. Create a share folder for all nodes. On rpi0:
         - Install nfs server
             sudo apt install nfs-kernel-server
         - Create a cloud folder 
