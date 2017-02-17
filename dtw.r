@@ -23,12 +23,9 @@ computeDTW <- function(i,j){
 
 computeDist <- function(i,j){
   try <- sqrt(sum((data.matrix[i,]-data.matrix[j,])^2))
-  return(try)
+
 }
 
-# ncores = 6
-# hosts <- c("localhost", "rpi1", "rpi2", "rpi3", "rpi4", "rpi5")
-# cl <- makeCluster(rep(hosts, each=ncores/6), methods=F)
 cl <- makeCluster(detectCores()-2)
 
 
@@ -38,6 +35,7 @@ time.dist <- system.time(
     res <- parLapply(cl, (j+1):(nrow(data.matrix.small)), fun = computeDTW, j=j)
   }
 )
+
 
 res
 stopCluster(cl)
