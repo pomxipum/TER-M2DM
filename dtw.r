@@ -15,6 +15,8 @@ data.matrix <- as.matrix(data)
 data.matrix.small <- data.matrix[1:10,1:100]
 
 computeDTW <- function(i){
+  template <- cos(data.matrix[i,])
+  try <- dtw(data.matrix[i,], template)
   template <- cos(data.matrix.small[i,])
   try <- dtw(data.matrix.small[i,], template)
   return(try)
@@ -24,11 +26,12 @@ computeDTW <- function(i){
 # hosts <- c("localhost", "rpi1", "rpi2", "rpi3", "rpi4", "rpi5")
 # cl <- makeCluster(rep(hosts, each=ncores/6), methods=F)
 cl <- makeCluster(detectCores()-1)
+data.matrix <- data.matrix[1:10,]
+clusterExport(cl, list("computeDTW","data.matrix","dtw"))
 
 clusterExport(cl, list("computeDTW","data.matrix.small","dtw"))
 time <- system.time(
-  res <- parLapply(cl, 1:(dim(data.matrix.small)[1]), fun = function(i) computeDTW(i))
-)
+  res <- parLapply(cl, 1:(dim(data.matrix)[1]-1), fun = function(i) computeDTW(i)))
 res
 stopCluster(cl)
 
