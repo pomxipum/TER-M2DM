@@ -23,7 +23,7 @@ computeDTW <- function(i){
 # hosts <- c("localhost", "rpi1", "rpi2", "rpi3", "rpi4", "rpi5")
 # cl <- makeCluster(rep(hosts, each=ncores/6), methods=F)
 cl <- makeCluster(detectCores()-1)
-data.matrix <- data.matrix[1:10,]
+data.matrix <- data.matrix[1:10,1:10]
 clusterExport(cl, list("computeDTW","data.matrix","dtw"))
 time <- system.time(
   res <- parLapply(cl, 1:(dim(data.matrix)[1]), fun = function(i) computeDTW(i))
