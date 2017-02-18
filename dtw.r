@@ -10,6 +10,27 @@ install.packages("dtw")
 library(dtw)
 library(parallel)
 
+<<<<<<< HEAD
+# data <- read.csv("mat/2009_agg200.csv", header = T,sep = ",")
+# data.matrix <- as.matrix(data)
+# save(data.matrix, file="data.matrix.RData")
+
+load("data.matrix.RData")
+data.matrix.small <- data.matrix[1:10,1:100]
+
+computeDTW <- function(i){
+  template <- cos(data.matrix.small[i,])
+  try <- dtw(data.matrix.small[i,], template)
+  return(try)
+}
+
+# ncores = 6
+# hosts <- c("localhost", "rpi1", "rpi2", "rpi3", "rpi4", "rpi5")
+# cl <- makeCluster(rep(hosts, each=ncores/6), methods=F)
+cl <- makeCluster(detectCores()-1)
+# data.matrix <- data.matrix[1:10,]
+# clusterExport(cl, list("computeDTW","data.matrix","dtw"))
+=======
 data <- read.csv("mat/2009_agg200.csv", header = T,sep = ",")
 save(data, file="data.RData")
 load("data.RData")
@@ -36,6 +57,7 @@ time.dist <- system.time(
   }
 )
 
+>>>>>>> 58ec9d032076d5df8f9e09688b1a0a55da115db3
 
 res
 stopCluster(cl)
