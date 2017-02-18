@@ -116,6 +116,11 @@ ref:
         - Set the python script to run at start up
             sudo crontab -e
                 add to the end: @reboot python /home/pi/mount_nfs_rpi0.py 
+
+
+
+INSTALL JAVA :
+sudo apt-get update && sudo apt-get install oracle-java7-jdk
             
     
         
