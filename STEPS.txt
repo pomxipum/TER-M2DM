@@ -74,12 +74,12 @@ ref:
             sudo raspi-config 
         Add IP adresses of all the nodes to /etc/hosts on each nodes 
             sudo nano /etc/hosts
-                192.168.43.253 rpi0 rpi0.local rpi0.lan
-                192.168.43.254 rpi1 rpi1.local rpi1.lan
-                192.168.43.252 rpi2 rpi2.local rpi2.lan
-                192.168.43.4 rpi3 rpi3.local rpi3.lan
-                192.168.43.2 rpi4 rpi4.local rpi4.lan
-                192.168.43.3 rpi5 rpi5.local rpi5.lan
+                192.168.1.7 rpi0 rpi0.local rpi0.lan
+                192.168.1.87 rpi1 rpi1.local rpi1.lan
+                192.168.1.40 rpi2 rpi2.local rpi2.lan
+                192.168.1.18 rpi3 rpi3.local rpi3.lan
+                192.168.1.81 rpi4 rpi4.local rpi4.lan
+                192.168.1.94 rpi5 rpi5.local rpi5.lan
         Create a rsa key on each node and add the key to the other nodes
             ssh-keygen -t rsa
             ssh-copy-id pi@rpi[]

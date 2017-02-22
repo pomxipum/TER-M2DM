@@ -14,3 +14,11 @@ ncores = 24
 > system.time(cl <- makeCluster(rep(hosts, each=ncores/6), master ="192.168.43.253", methods = F))
    user  system elapsed
   0.110   0.440  30.725
+
+  
+                    seq                                                      par
+                                                coarse                                                fine
+                                6           12          18          24              6           12          18          24
+ dtw                28409.59    4423.096    2263.678    1577.439    1250.844        4830.704    2588.75     1872.853    1539.185
+ euclidean          353.669     59.601      31.37       22.594      19.192          64.131      37.169      30.729      32.858
+ 
